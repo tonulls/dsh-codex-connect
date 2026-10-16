@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { zstdDecompressSync } from 'node:zlib'
 import { Context } from '@deepseek-ai/cordis'
+import { normalizeContext } from '@earendil-works/pi-ai/utils/transcript'
 import type { Context as PiContext, SimpleStreamOptions } from '@earendil-works/pi-ai'
 import { CompactionId, compactCheckpointSource } from '@deepseek-ai/dsh-compaction'
 import { openaiCodexProvider } from '@earendil-works/pi-ai/providers/openai-codex'
@@ -239,7 +240,7 @@ describe('native checkpoint payload callback composition', () => {
           }),
           timestamp: Date.now(),
         }))
-        const result = await nativeProvider.streamSimple(piModel, { messages }, {
+        const result = await nativeProvider.streamSimple(piModel, normalizeContext({ messages }), {
           apiKey: accessToken('callback-fixture'), transport: 'sse', maxRetries: 0, onPayload,
         }).result()
         expect(result.stopReason).toBe('stop')
