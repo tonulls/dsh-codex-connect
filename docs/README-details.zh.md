@@ -16,16 +16,16 @@ Codex Connect 为标准 Harness agent loop 添加 `openai-codex` 模型提供方
 
 ## 快速开始
 
-本指南推荐 Codex Connect `0.2.0-alpha.4` / DSH `0.2.1-alpha.3`；其他受支持的精确宿主版本见下表。请先运行 `dsh --version`，再用 `doctor --json` 做本地诊断；单凭 CLI 版本无法证明实际安装的模型运行库版本，缺少版本元数据时会报告未知。其他版本请查阅[安装与升级](INSTALL.md)。`alpha` 等会移动的 npm tag 不代表兼容性保证。
+本指南推荐当前 `tonulls` 分支 Codex Connect `0.2.0-alpha.4.1` / DSH `0.2.1-alpha.4`；上游历史发布的其他精确宿主版本见下表。请先运行 `dsh --version`，再用 `doctor --json` 做本地诊断；单凭 CLI 版本无法证明实际安装的模型运行库版本，缺少版本元数据时会报告未知。其他版本请查阅[安装与升级](INSTALL.md)。`alpha` 等会移动的 npm tag 不代表兼容性保证。
 
 | 要求 | 已验证组合 |
 |---|---|
-| Codex Connect | `0.2.0-alpha.4` |
-| DeepSeek Harness | `0.1.7-rc.1`、`0.1.7-rc.2`、`0.2.0-rc.1`、`0.2.0-rc.2`、`0.2.1-alpha.1`、`0.2.1-alpha.2` 或 `0.2.1-alpha.3`（包版本必须一致） |
+| Codex Connect | `0.2.0-alpha.4.1`（当前 tonulls 分支，已验证） |
+| DeepSeek Harness | `0.2.1-alpha.4`（当前 tonulls 分支；其他精确组合见[兼容性目录](../verified-compatibility.json)） |
 | Node.js | `^22.19.0 \|\| >=24.0.0` |
 | 账户 | 通过 ChatGPT OAuth 使用所请求的 Codex 模型；可用性由 OpenAI 决定 |
 
-`0.2.0-alpha.4` 将精确宿主支持扩展到 DSH `0.2.1-alpha.2` 和 `0.2.1-alpha.3`，保留原有五个宿主。原有受支持宿主无需升级；Task 仍暂停，默认设置不变。
+当前 `tonulls` 分支的 `0.2.0-alpha.4.1` 已针对 DSH `0.2.1-alpha.4` 完成精确安装与运行时验证。上游历史版本 `0.2.0-alpha.4` 支持到 DSH `0.2.1-alpha.3`；原有受支持宿主无需升级，Task 仍暂停，默认设置不变。
 
 历史发布 [`0.2.0-alpha.3`](release-notes/0.2.0-alpha.3.md) 增加官方 Desktop 登录适配和桌面版专用账户诊断，保留 Web 登录行为。Desktop 使用独立的 profile 和自带 CLI，请遵循[Desktop 安装说明](INSTALL.md#official-desktop)。声明的宿主版本、默认设置和账户存储不变。
 

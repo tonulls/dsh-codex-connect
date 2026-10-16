@@ -44,6 +44,7 @@ Check `dsh --version` before changing the requested profile. Use `dsh --help` to
 | `0.2.1-alpha.1` | `0.2.0-alpha.4` |
 | `0.2.1-alpha.2` | `0.2.0-alpha.4` |
 | `0.2.1-alpha.3` | `0.2.0-alpha.4` |
+| `0.2.1-alpha.4` | `0.2.0-alpha.4.1` |
 
 If your exact DSH version is unknown or not listed, preserve the installed host, report that the combination is unverified, and verify it before making installation changes. A missing record does not prove incompatibility, and the catalog's latest verified DSH version is not the latest upstream release. Do not recommend upgrading or downgrading DSH merely to match a row. Investigate any specific failure and seek verification of the installed combination. Do not blindly install `dsh-codex-connect@alpha`: `alpha` is a moving tag, not a compatibility guarantee. Do not infer support for newer DSH versions from these rows.
 

@@ -1,7 +1,7 @@
 # Contributing
 
 Thanks for helping improve Codex Connect. Keep each pull request focused on
-one change and start your branch from the current `main` branch.
+one change and start your branch from the repository's current default branch.
 
 ## Local checks
 
@@ -16,6 +16,9 @@ pnpm run check
 The scheduled upstream DSH compatibility signal and its maintainer response
 procedure are documented in
 [../.github/UPSTREAM_DSH_CANARY.md](../.github/UPSTREAM_DSH_CANARY.md).
+The exact declared DSH versions are gated by `engines.dsh`; a canary pass for a
+newer DSH release is preliminary and does not expand that list. Add support only
+after the exact installation matrix and the required product acceptance pass.
 
 The `../lib/` directory is generated output. Update it only by running the project
 build (`pnpm run build`); do not hand-edit generated files.
