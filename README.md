@@ -1,4 +1,7 @@
-# Codex Connect
+# DSH Codex Connect
+
+[![Лицензия: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Звёзды GitHub](https://img.shields.io/github/stars/tonulls/dsh-codex-connect?style=social)](https://github.com/tonulls/dsh-codex-connect/tree/tonulls)
 
 Русский | [English](docs/README.en.md) | [简体中文](docs/README.zh.md)
 

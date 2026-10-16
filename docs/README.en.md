@@ -1,4 +1,4 @@
-# Codex Connect
+# DSH Codex Connect
 
 [Russian](../README.md) | English | [简体中文](README.zh.md)
 
