@@ -1,7 +1,7 @@
 # Releasing an Alpha
 
 Alpha releases are published from `main` by the manually triggered
-[OIDC release workflow](.github/workflows/release.yml). The npm package must
+[OIDC release workflow](../.github/workflows/release.yml). The npm package must
 already have an npm Trusted Publisher configured for this repository, workflow
 file, and the `npm-release` environment. The workflow uses no long-lived npm
 token and does not promote the `latest` dist-tag.
@@ -14,7 +14,7 @@ It is not a Beta/stable promotion or a requirement to upgrade DSH.
 
 ## Before triggering the workflow
 
-1. Prepare and review the candidate version in `package.json` and its generated
+1. Prepare and review the candidate version in `../package.json` and its generated
    output. Record a new exact compatibility pair only after its installation
    checks pass. Keep public installation recommendations on an already published
    pair until the new version is available; a candidate record is not publication
@@ -24,11 +24,11 @@ It is not a Beta/stable promotion or a requirement to upgrade DSH.
    `npm pack --dry-run`. `check` includes build and package checks, but not the
    browser or isolated-install suites. The matrix checks every exact declared DSH target and requires identical packed artifact hashes; it does not replace account acceptance. Regenerate the lockfile only for dependency
    changes. The packed files must include the
-   root `README.md` and Chinese document under `docs/`, with no localized README
+   root `../README.md` and Chinese document under `docs/`, with no localized README
    beside the root README.
 3. Merge the intended package version into `main` and start with a clean tree.
    The version must be a strict `MAJOR.MINOR.PATCH-alpha.NUMBER...` semver and
-   must exactly match `package.json`.
+   must exactly match `../package.json`.
 4. Confirm that the matching npm version, Git tag `v<version>`, and GitHub
    release do not already exist. Published npm versions are immutable.
 5. In the repository's **Actions** tab, run **Publish alpha release** on the
@@ -42,7 +42,7 @@ The workflow requires completed successful main CI for the exact release SHA, in
 
 Independently confirm the npm version, `alpha` dist-tag, Git tag commit, and
 GitHub prerelease. Then update the repository's public recommendation in
-`README.md`, `docs/README.zh.md`, `INSTALL.md`, and `README.i18n.yaml` together
+`../README.md`, `README.en.md`, `INSTALL.md`, and `../README.i18n.yaml` together
 through the normal PR process. Do not republish the same version to refresh its
 README: a package prepared before publication may retain the previous confirmed
 recommendation. Record the new exact installation command in its release notes.
@@ -68,7 +68,7 @@ The readback must equal `<version>`. After the first stable release,
 
 ## npm readback diagnostics
 
-The post-publish check now uses `scripts/verify-npm-readback.mjs`: at most 12
+The post-publish check now uses `../scripts/verify-npm-readback.mjs`: at most 12
 attempts, ten seconds apart, with parallel bounded version/tag queries to the
 explicit public registry and `--prefer-online`. Each query has a 12-second npm
 fetch timeout, no internal retries, and a 20-second process deadline. Output
@@ -85,7 +85,7 @@ registry visibility. See the [npm configuration reference](https://docs.npmjs.co
 main commit. First run read-only verification from trusted current main code:
 
 ```sh
-node scripts/recover-release.mjs --version <exact-alpha-version> --run-id <original-release-run-id>
+node ../scripts/recover-release.mjs --version <exact-alpha-version> --run-id <original-release-run-id>
 ```
 
 The helper requires the original repository/main/workflow identity, successful
@@ -104,7 +104,7 @@ apply. This workflow has no OIDC/npm publication permission or package-install
 step. Alternatively, an authorized maintainer can apply the verified result:
 
 ```sh
-CONFIRM=RECOVER node scripts/recover-release.mjs --version <exact-alpha-version> --run-id <original-release-run-id> --apply
+CONFIRM=RECOVER node ../scripts/recover-release.mjs --version <exact-alpha-version> --run-id <original-release-run-id> --apply
 ```
 
 Apply only creates missing tag/release records and checks their final identity.

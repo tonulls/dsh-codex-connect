@@ -4,3 +4,6 @@ node_modules/
 .playwright-cli/
 .issue211-artifacts/
 .remember-acceptance-runs/
+# Local history and tests are not part of published repository changes.
+.History/
+/tests/

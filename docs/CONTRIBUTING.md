@@ -15,14 +15,14 @@ pnpm run check
 
 The scheduled upstream DSH compatibility signal and its maintainer response
 procedure are documented in
-[.github/UPSTREAM_DSH_CANARY.md](.github/UPSTREAM_DSH_CANARY.md).
+[../.github/UPSTREAM_DSH_CANARY.md](../.github/UPSTREAM_DSH_CANARY.md).
 
-The `lib/` directory is generated output. Update it only by running the project
+The `../lib/` directory is generated output. Update it only by running the project
 build (`pnpm run build`); do not hand-edit generated files.
 
 ## Documentation and issue reports
 
-- Keep `README.md` and `docs/README.zh.md` in sync when changing the user guide.
+- Keep `../README.md` and `docs/README.zh.md` in sync when changing the user guide.
   Preserve the same commands, behavior, and safety warnings in both languages;
   keep canonical model, provider, and command identifiers unchanged.
 - Public-facing project copy, issue titles, and template text must be in English.
@@ -39,7 +39,7 @@ Follow [VERSIONING.md](VERSIONING.md) for release numbering, channels, and the
 distinction between verified candidates and published installation recommendations.
 
 When a release adds a user-facing capability, record its version and highlight
-kind in `update-highlights.json` after checking the version diff and README.
+kind in `../update-highlights.json` after checking the version diff and README.
 Leave new documentation-only and internal maintenance releases out of the list;
 preserve existing history, including empty highlight entries.
 The update notice filters this catalog for each user's installed-to-latest
@@ -47,7 +47,7 @@ version range; it does not show the whole catalog to every user.
 
 ## Verified compatibility record
 
-Update `verified-compatibility.json` only after an exact plugin and DSH version
+Update `../verified-compatibility.json` only after an exact plugin and DSH version
 combination has passed the project compatibility checks. Set
 `latestDshVersion` to the newest DSH release the project is reporting to users,
 then add that exact version under each plugin release that was verified. Do not

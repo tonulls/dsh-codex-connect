@@ -8,7 +8,7 @@ Verify the repository, branch, HEAD and existing changes. Preserve unrelated wor
 Use [the dated runtime checkpoint](docs/agent-notes/adaptive-runtime-status.md) when resuming Think, Split or Remember work; confirm mutable GitHub facts before acting on them.
 Read only the relevant additional material:
 
-- Compatibility or releases: `compatibility.json`, `verified-compatibility.json`, then the relevant checker and `RELEASING.md` when release work is authorized.
+- Compatibility or releases: `compatibility.json`, `verified-compatibility.json`, then the relevant checker and `docs/RELEASING.md` when release work is authorized.
 - Native compaction: `docs/experiments/remember-acceptance.md` and the lifecycle guide it links.
 - Model-visible instructions: `docs/agent-notes/astra-context-audit.md` and the affected source/tests.
 - Product architecture: the relevant section of `docs/design.md`.

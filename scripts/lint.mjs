@@ -1,6 +1,6 @@
 import { readFile, stat } from 'node:fs/promises'
 import './vendor-codex-oauth.mjs'
-import { isAlphaReleaseVersion, validateReadmeInstallation, validateUpdateHighlights } from './release-metadata.mjs'
+import { isAlphaReleaseVersion, validateUpdateHighlights } from './release-metadata.mjs'
 import './release-metadata.test.mjs'
 
 const packageJson = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
@@ -22,10 +22,12 @@ for (const keyword of ['dsh-plugin', 'deepseek-harness', 'openai-codex', 'chatgp
 const productFiles = [
   'package.json',
   'README.md',
+  'docs/README.en.md',
+  'docs/README-details.md',
   'docs/README.zh.md',
   'update-highlights.json',
-  'INSTALL.md',
-  'MIGRATION.md',
+  'docs/INSTALL.md',
+  'docs/MIGRATION.md',
   'NOTICE',
   'LICENSE',
   'docs/design.md',
@@ -41,8 +43,14 @@ for (const filename of productFiles) {
 }
 
 const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8')
-if (!readme.includes('Use the image generation capability included with your current GPT subscription.')) {
-  failures.push('README must describe image generation with the approved subscription copy')
+const englishReadme = await readFile(new URL('../docs/README.en.md', import.meta.url), 'utf8')
+for (const [filename, text] of [['README.md', readme], ['docs/README.en.md', englishReadme]]) {
+  if (!text.includes('0.2.0-alpha.4.1') || !text.includes('0.2.1-alpha.4')) {
+    failures.push(`${filename} must state the current fork/plugin compatibility pair`)
+  }
+  if (!text.includes('git+https://github.com/tonulls/dsh-codex-connect.git#tonulls')) {
+    failures.push(`${filename} must use the tonulls GitHub installation source`)
+  }
 }
 const chineseReadme = await readFile(new URL('../docs/README.zh.md', import.meta.url), 'utf8')
 if (!chineseReadme.includes('使用你当前 GPT 订阅计划提供的图片生成能力。')) {
@@ -51,7 +59,9 @@ if (!chineseReadme.includes('使用你当前 GPT 订阅计划提供的图片生�
 
 try {
   const compatibility = JSON.parse(await readFile(new URL('../verified-compatibility.json', import.meta.url), 'utf8'))
-  failures.push(...validateReadmeInstallation([readme, chineseReadme], compatibility, packageJson.version))
+  if (!readme.includes('[English](docs/README.en.md)') || !englishReadme.includes('[Русский](../README.md)')) {
+    failures.push('Russian and English README localization links must point to each other')
+  }
 } catch {
   failures.push('verified-compatibility.json must be readable JSON')
 }

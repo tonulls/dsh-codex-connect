@@ -1,6 +1,6 @@
 # Versioning policy
 
-English | [中文](docs/VERSIONING.zh.md)
+English | [中文](VERSIONING.zh.md)
 
 Codex Connect versions identify plugin releases independently of DeepSeek Harness. Show the plugin version and its verified DSH pairing together; do not infer one from the other.
 
@@ -18,10 +18,10 @@ Alpha, Beta, RC, and a non-prerelease version describe the plugin's readiness, n
 
 | Information | Maintained in | Meaning |
 |---|---|---|
-| Plugin build version | `package.json.version` | Identity embedded in the build and CLI |
-| Host dependency requirements | `compatibility.json` and dependency declarations | Intended supported runtime constraints, checked for consistency |
-| Verified exact combinations | `verified-compatibility.json` | Evidence from checks of each explicit DSH/plugin pair |
-| User-visible changes | GitHub Release notes and `update-highlights.json` | What changed between plugin releases |
+| Plugin build version | `../package.json.version` | Identity embedded in the build and CLI |
+| Host dependency requirements | `../compatibility.json` and dependency declarations | Intended supported runtime constraints, checked for consistency |
+| Verified exact combinations | `verified-../compatibility.json` | Evidence from checks of each explicit DSH/plugin pair |
+| User-visible changes | GitHub Release notes and `../update-highlights.json` | What changed between plugin releases |
 
 Keep the compatibility catalog's `schemaVersion: 1`, `checkedAt`, `latestDshVersion`, and `pluginVersions[].{version,verifiedDshVersions}` fields at the existing URL. Preserve historical entries. An unlisted pair is unverified, not necessarily incompatible. Neither a target dependency nor a green test on a different pairing proves compatibility.
 
@@ -34,7 +34,7 @@ Do not replace V1 in place with a version-keyed object or infer a range from a s
 - `alpha` is the moving channel written by the current release workflow.
 - `latest` is promoted separately and intentionally. Before the first stable release it may point to a verified Alpha; afterward it must point only to stable releases. Publishing an Alpha does not authorize or perform this promotion.
 - Exact installation commands identify a plugin release; dist-tags do not guarantee compatibility.
-- Keep the public README recommendation on a confirmed published pair while preparing a newer candidate. The recommendation may therefore differ from `package.json.version`.
+- Keep the public README recommendation on a confirmed published pair while preparing a newer candidate. The recommendation may therefore differ from `../package.json.version`.
 
 The project newest version and the newest verified plugin for a user's existing DSH are different questions. More precise host-specific recommendations and generated installation sections are follow-up work; this policy does not claim the current update UI computes that choice from every historical record.
 

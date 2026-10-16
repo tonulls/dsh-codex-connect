@@ -1,6 +1,6 @@
 # 版本管理规则
 
-[English](../VERSIONING.md) | 中文
+[English](VERSIONING.md) | 中文
 
 Codex Connect 使用独立于 DeepSeek Harness 的插件版本。应并列展示插件版本与已验证的 DSH 组合，不从一个版本号推断另一个。
 
@@ -52,7 +52,7 @@ V1 亮点条目按 SemVer 递增排列，版本唯一，能力类别必须已知
 
 ## 发布检查
 
-完整流程见 [RELEASING.md](../RELEASING.md)。冻结安装及各项现有检查需要分别执行：
+完整流程见 [RELEASING.md](RELEASING.md)。冻结安装及各项现有检查需要分别执行：
 
 ```sh
 pnpm install --frozen-lockfile

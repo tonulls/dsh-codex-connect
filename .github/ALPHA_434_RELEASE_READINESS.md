@@ -23,7 +23,7 @@ These are account-free compatibility checks. The contributor's [separately attri
 
 ## Required publication and readback gates
 
-Follow [RELEASING.md](../RELEASING.md). Merge this metadata update through the normal PR checks, then require successful CI for the exact final main SHA. Use only the existing `Publish alpha release` workflow and its `npm-release` environment approval; do not bypass checks or publish from a local dirty checkout.
+Follow [RELEASING.md](../docs/RELEASING.md). Merge this metadata update through the normal PR checks, then require successful CI for the exact final main SHA. Use only the existing `Publish alpha release` workflow and its `npm-release` environment approval; do not bypass checks or publish from a local dirty checkout.
 
 After publication, independently verify npm version and alpha dist-tag, unchanged latest dist-tag, matching Git tag and prerelease, package integrity and extracted contents, and isolated installed-model resolution. Only then update the four public installation recommendation files together and resolve #186 with the exact published installation command and verification scope. The old npm package's embedded README is immutable and must not be republished just to refresh documentation.
 
