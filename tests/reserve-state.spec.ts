@@ -62,6 +62,16 @@ describe('Reserve return targets', () => {
 })
 
 describe('Reserve one-shot dispatch permits', () => {
+  it('authorizes only the exact loop signal and session across API module copies', () => {
+    const permits = new ReserveRequestPermits()
+    const loopSignal = new AbortController().signal
+    permits.issue('session', key, new AbortController().signal, loopSignal)
+    expect(permits.authorizesRequest('session', loopSignal)).toBe(true)
+    expect(permits.authorizesRequest('other-session', loopSignal)).toBe(false)
+    expect(permits.authorizesRequest('session', new AbortController().signal)).toBe(false)
+    expect(permits.authorizesRequest('session', undefined)).toBe(false)
+  })
+
   it('authorizes only the matching account/user and consumes every attempted permit once', () => {
     const permits = new ReserveRequestPermits()
     expect(() => permits.consume('session', access)).toThrow('fresh server-authorized')

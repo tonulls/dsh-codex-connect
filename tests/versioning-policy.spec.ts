@@ -54,7 +54,7 @@ describe('independent plugin versioning', () => {
 
   it('records the reviewed bilingual policy and preserves shared identifiers', async () => {
     const record = await readFile(new URL('../docs/versioning.i18n.yaml', import.meta.url), 'utf8')
-    for (const path of ['VERSIONING.md', 'docs/VERSIONING.zh.md']) {
+    for (const path of ['docs/VERSIONING.md', 'docs/VERSIONING.zh.md']) {
       const bytes = await readFile(new URL(`../${path}`, import.meta.url))
       const hash = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex')
       expect(record).toContain(`${path}: ${hash}`)
@@ -66,7 +66,7 @@ describe('independent plugin versioning', () => {
 
   it('includes both policy documents in the package configuration', async () => {
     const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')) as { files: string[] }
-    expect(manifest.files).toContain('VERSIONING.md')
+    expect(manifest.files).toContain('docs/VERSIONING.md')
     expect(manifest.files).toContain('docs')
   })
 })

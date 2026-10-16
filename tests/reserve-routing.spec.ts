@@ -213,7 +213,7 @@ describe('assembled Reserve agent routing', () => {
     await send(agent, 'first')
     expect(wires).toHaveLength(1)
     expect(wires[0]).toMatchObject({ model: 'gpt-reserve' })
-    expect(wires[0]).not.toHaveProperty('reasoning')
+    expect(wires[0]).toMatchObject({ reasoning: { effort: 'none' } })
     expect(wires[0]).not.toHaveProperty('service_tier')
     expect(agent.session.requestHeader()?.config).toEqual({ provider: 'openai-codex', model: 'gpt-reserve' })
     expect(agent.session.snapshotEvents().filter(event => event.type === 'request/context').at(-1)?.data)
