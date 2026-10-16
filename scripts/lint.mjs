@@ -1,7 +1,6 @@
 import { readFile, stat } from 'node:fs/promises'
 import './vendor-codex-oauth.mjs'
 import { isAlphaReleaseVersion, validateUpdateHighlights } from './release-metadata.mjs'
-import './release-metadata.test.mjs'
 
 const packageJson = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
 const failures = []

@@ -7,6 +7,9 @@ node_modules/
 # Local history and tests are not part of published repository changes.
 .History/
 /tests/
+/scripts/*.test.mjs
+/vitest.config.ts
+/vitest.browser.config.ts
 
 # Private working archive; keep local research and run evidence out of hosted branches.
 /docs/agent-notes/

@@ -18,7 +18,7 @@ for (const name of required) {
   if (!names.includes(name)) throw new Error(`packed artifact is missing ${name}`)
 }
 
-const forbidden = names.filter(name => /(^|\/)(?:\.env(?:\.|$)|\.git|node_modules|tests?|scripts?|src)(?:\/|$)|auth\.json$|credential|token/iu.test(name))
+const forbidden = names.filter(name => /(^|\/)(?:\.env(?:\.|$)|\.git|node_modules|tests?|scripts?|src|agent-notes|experiments)(?:\/|$)|auth\.json$|credential|token/iu.test(name))
 if (forbidden.length > 0) throw new Error(`packed artifact contains forbidden files: ${forbidden.join(', ')}`)
 if (names.includes('docs/design/codex-connect-images-v4.md')) {
   throw new Error('core packed artifact must not include the images implementation design')

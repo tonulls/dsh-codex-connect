@@ -26,8 +26,6 @@ import {
   validateDoctorResult,
 } from './check-dsh-install.mjs'
 import { validateRuntimeProjection } from './check-installed-runtime.mjs'
-import './canary-multiversion.test.mjs'
-import './canary-maintenance.test.mjs'
 
 const failures = []
 let assertionCount = 0

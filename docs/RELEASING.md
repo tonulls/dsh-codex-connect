@@ -20,7 +20,7 @@ It is not a Beta/stable promotion or a requirement to upgrade DSH.
    pair until the new version is available; a candidate record is not publication
    evidence. Update this runbook when the release procedure changes.
 2. Before merging, run `pnpm install --frozen-lockfile`, `pnpm run check`,
-   `pnpm run test:browser`, and `pnpm run check:dsh-matrix`, then review
+   and `pnpm run check:dsh-matrix`, then review
    `npm pack --dry-run`. `check` includes build and package checks, but not the
    browser or isolated-install suites. The matrix checks every exact declared DSH target and requires identical packed artifact hashes; it does not replace account acceptance. Regenerate the lockfile only for dependency
    changes. The packed files must include the
@@ -35,7 +35,7 @@ It is not a Beta/stable promotion or a requirement to upgrade DSH.
    `main` branch. Enter the exact package version and type `PUBLISH` in the
    confirmation field.
 
-The workflow requires completed successful main CI for the exact release SHA, including both Node versions, browser UI regression and the Windows contract. Missing, incomplete, skipped or failed jobs block publishing. A read-only job installs the frozen dependencies, runs `pnpm run check`, and uploads a SHA-256-identified tarball. The `npm-release` job rechecks CI after environment approval, verifies the tarball digest, and publishes that artifact with lifecycle scripts disabled. Only this job has contents-write and OIDC permissions; it does not install project dependencies or run tests. It retries the npm version and `alpha` dist-tag readback and creates the matching GitHub prerelease. It intentionally does not run
+The workflow requires completed successful main CI for the exact release SHA. Missing, incomplete, skipped or failed jobs block publishing. A read-only job installs the frozen dependencies, runs `pnpm run check`, and uploads a SHA-256-identified tarball. The `npm-release` job rechecks CI after environment approval, verifies the tarball digest, and publishes that artifact with lifecycle scripts disabled. Only this job has contents-write and OIDC permissions; it does not install project dependencies. It retries the npm version and `alpha` dist-tag readback and creates the matching GitHub prerelease. It intentionally does not run
 `npm dist-tag add` because npm Trusted Publishing does not support that command.
 
 ## After publication

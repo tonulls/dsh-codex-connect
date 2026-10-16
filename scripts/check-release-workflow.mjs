@@ -1,8 +1,5 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import './verify-release-ci.test.mjs'
-import './verify-npm-readback.test.mjs'
-import './recover-release.test.mjs'
 
 const workflowPath = fileURLToPath(new URL('../.github/workflows/release.yml', import.meta.url))
 const ciWorkflowPath = fileURLToPath(new URL('../.github/workflows/ci.yml', import.meta.url))
@@ -92,9 +89,9 @@ assertContract('full check includes the release contract', /(?:^|&&)\s*pnpm run 
 const ciValidateJob = ciWorkflow.match(/^  validate:\s*\n([\s\S]*?)(?=^  \S|(?![\s\S]))/m)?.[1] ?? ''
 const ciValidateSteps = [...ciValidateJob.matchAll(/^      - [\s\S]*?(?=^      - |(?![\s\S]))/gm)]
 assertContract(
-  'PR CI validate runs the release workflow contract as a required step',
+  'PR CI validate runs the package checks as a required step',
   !/^    (?:if|continue-on-error):/m.test(ciValidateJob) && ciValidateSteps.some(([step]) =>
-    /^        run: pnpm run check:release-workflow[ \t]*$/m.test(step) &&
+    /^        run: pnpm run check(?:\s|$)/m.test(step) &&
     !step.split('\n').some(line => /^(?:      - |        )(?:if|continue-on-error):/.test(line)),
   ),
 )

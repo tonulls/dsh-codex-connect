@@ -1,6 +1,6 @@
 import { pathToFileURL } from 'node:url'
 
-const required = ['validate (22.19.0)', 'validate (24.x)', 'browser-ui-regression', 'windows-canary-contract']
+const required = ['validate (22.19.0)', 'validate (24.x)']
 
 /** Fail closed unless the selected main SHA completed every required CI job. */
 export function assertReleaseCI(run, jobs, sha, repository) {

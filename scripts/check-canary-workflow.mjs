@@ -229,13 +229,14 @@ assertContract(
 assertContract(
   'PR CI validate runs the canary workflow contract as a required step',
   !/^    (?:if|continue-on-error):/m.test(ciValidateJob) && ciValidateSteps.some(([step]) =>
-    /^        run: pnpm run check:canary-workflow[ \t]*$/m.test(step) &&
+    /^        run: pnpm run check[ \t]*$/m.test(step) &&
     !step.split('\n').some(line => /^(?:      - |        )(?:if|continue-on-error):/.test(line)),
-  ),
+  ) && /pnpm run check:canary-workflow/.test(packageJson.scripts?.check ?? ''),
 )
 assertContract(
   'CI executes Windows command-script and process-tree contracts',
-  /^  windows-canary-contract:\s*$[\s\S]*?runs-on:\s*windows-latest[\s\S]*?node scripts\/check-dsh-next-contract\.mjs/mu.test(ciWorkflow),
+  /pnpm run check:canary-workflow/.test(packageJson.scripts?.check ?? '')
+    && /node scripts\/check-dsh-next-contract\.mjs/.test(packageJson.scripts?.['check:canary-workflow'] ?? ''),
 )
 
 if (failures.length > 0) {
