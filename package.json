@@ -22,11 +22,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/franksong2702/dsh-codex-connect.git"
+    "url": "git+https://github.com/tonulls/dsh-codex-connect.git"
   },
-  "homepage": "https://github.com/franksong2702/dsh-codex-connect#readme",
+  "homepage": "https://github.com/tonulls/dsh-codex-connect#readme",
   "bugs": {
-    "url": "https://github.com/franksong2702/dsh-codex-connect/issues"
+    "url": "https://github.com/tonulls/dsh-codex-connect/issues"
   },
   "type": "module",
   "engines": {

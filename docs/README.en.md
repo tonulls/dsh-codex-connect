@@ -1,18 +1,18 @@
 # Codex Connect
 
-## Localization
-
-[Русский](../README.md) | English
+[Russian](../README.md) | English | [简体中文](README.zh.md)
 
 ## Short description
 
-Connects ChatGPT OAuth to DeepSeek Harness and adds the `openai-codex` model provider. DSH manages sessions; this plugin adds Codex authorization, account selection, and optional tools.
+An independent Codex Connect fork that adds ChatGPT OAuth and the `openai-codex` model provider to [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). DSH manages sessions, tools, and permissions; this plugin provides Codex authorization, account selection, and optional features.
 
-This is an independent community project, not affiliated with OpenAI, ChatGPT, Codex, DeepSeek, or DeepSeek Harness. A ChatGPT subscription is not an OpenAI Platform API key.
+This community-maintained project is in Alpha and is not affiliated with OpenAI, ChatGPT, Codex, DeepSeek, or DeepSeek Harness. A ChatGPT subscription is not an OpenAI Platform API key.
 
 ## Installation and start
 
-The current fork is `0.2.0-alpha.4.1`, adapted for DSH `0.2.1-alpha.4`. Install from [`tonulls/dsh-codex-connect`, branch `tonulls`](https://github.com/tonulls/dsh-codex-connect/tree/tonulls), into the same profile you use to run DSH.
+The current fork version is `0.2.0-alpha.4.1`; its verified pairing is DSH `0.2.1-alpha.4`. Compatibility with other version combinations has not been confirmed. Install this fork from the public [`tonulls/dsh-codex-connect`](https://github.com/tonulls/dsh-codex-connect/tree/tonulls) GitHub repository, using the same profile that you use to run DSH.
+
+Requirements: Node.js `^22.19.0` or `>=24.0.0`, and an installed DSH CLI. This branch can change over time, so installing from it selects the current `tonulls` branch state rather than an immutable npm release.
 
 1. Make sure `dsh` is available and you know which profile DSH uses. The example below uses `web`.
 2. Install the plugin from the `tonulls` branch:
@@ -79,6 +79,8 @@ Removing the plugin does not delete DSH sessions or saved OAuth accounts. Do not
 - [Auto-review](auto-review.md)
 - [Development and maintenance](CONTRIBUTING.md)
 - [Русская версия README](../README.md)
+- [Chinese README](README.zh.md)
+- [Source code and changes](https://github.com/tonulls/dsh-codex-connect)
 
 ## Donate
 

@@ -1,18 +1,18 @@
 # Codex Connect
 
-## Локализация
-
-Русский | [English](docs/README.en.md)
+Русский | [English](docs/README.en.md) | [简体中文](docs/README.zh.md)
 
 ## Краткое описание
 
-Плагин подключает ChatGPT OAuth к DeepSeek Harness и добавляет провайдера моделей `openai-codex`. Управляет сессиями сам DSH; плагин добавляет авторизацию Codex, выбор аккаунта и дополнительные инструменты.
+Независимый форк Codex Connect добавляет OAuth-вход через ChatGPT и провайдера моделей `openai-codex` для [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness). Сессиями, инструментами и разрешениями управляет DSH; плагин отвечает за подключение Codex, выбор аккаунта и дополнительные функции.
 
-Это независимый проект сообщества, не связанный с OpenAI, ChatGPT, Codex, DeepSeek или DeepSeek Harness. Подписка ChatGPT не является ключом OpenAI Platform API.
+Проект находится в стадии Alpha и поддерживается сообществом. Он не связан с OpenAI, ChatGPT, Codex, DeepSeek или DeepSeek Harness. Подписка ChatGPT не является ключом OpenAI Platform API.
 
 ## Установка и запуск
 
-Текущий форк — `0.2.0-alpha.4.1`, адаптированный для DSH `0.2.1-alpha.4`. Устанавливайте из GitHub-репозитория [`tonulls/dsh-codex-connect`, ветка `tonulls`](https://github.com/tonulls/dsh-codex-connect/tree/tonulls), в тот же профиль, с которым запускаете DSH.
+Текущая версия форка — `0.2.0-alpha.4.1`; проверенная пара для неё — DSH `0.2.1-alpha.4`. Для других сочетаний версий совместимость не подтверждена. Устанавливайте именно этот форк из публичного GitHub-репозитория [`tonulls/dsh-codex-connect`](https://github.com/tonulls/dsh-codex-connect/tree/tonulls), в тот профиль, с которым запускаете DSH.
+
+Требования: Node.js `^22.19.0` или `>=24.0.0`; установленный DSH. Эта ветка обновляется, поэтому установка из неё получает текущее состояние `tonulls`, а не неизменяемую версию из npm.
 
 1. Убедитесь, что команда `dsh` доступна, а DSH использует нужный профиль. В примере это `web`.
 2. Установите плагин из ветки `tonulls`:
@@ -79,6 +79,8 @@ dsh plugin --profile web exec dsh-codex-connect doctor --json
 - [Автоматическая проверка](docs/auto-review.md)
 - [Разработка и сопровождение](docs/CONTRIBUTING.md)
 - [Английская версия README](docs/README.en.md)
+- [Китайская версия README](docs/README.zh.md)
+- [Исходный код и список изменений](https://github.com/tonulls/dsh-codex-connect)
 
 ## Donate
 

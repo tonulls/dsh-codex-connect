@@ -1,5 +1,6 @@
-# Git blob hashes of the current Russian and English README versions.
-# Update both documents together when product instructions change.
-# Recompute with: git hash-object README.md docs/README.en.md
-README.md: a9777b65e78494a0d800d59d0719dfd46424c867
-docs/README.en.md: 1d985d2a631f161ae0a2d958b695756afcea8ef1
+# Git blob hashes of the current Russian, English, and Chinese README versions.
+# Update all three documents together when product instructions change.
+# Recompute with: git hash-object README.md docs/README.en.md docs/README.zh.md
+README.md: 0a76e8e7871421d9b9fb344db12dfd12f99fb876
+docs/README.en.md: f2807d8c2a1e3597b841c31fc894bee4b56f07a8
+docs/README.zh.md: 1b02eb1320a7ea8bdf2cd778438382d082b23e7f

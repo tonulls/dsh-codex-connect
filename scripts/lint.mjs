@@ -44,7 +44,12 @@ for (const filename of productFiles) {
 
 const readme = await readFile(new URL('../README.md', import.meta.url), 'utf8')
 const englishReadme = await readFile(new URL('../docs/README.en.md', import.meta.url), 'utf8')
-for (const [filename, text] of [['README.md', readme], ['docs/README.en.md', englishReadme]]) {
+const chineseReadme = await readFile(new URL('../docs/README.zh.md', import.meta.url), 'utf8')
+for (const [filename, text] of [
+  ['README.md', readme],
+  ['docs/README.en.md', englishReadme],
+  ['docs/README.zh.md', chineseReadme],
+]) {
   if (!text.includes('0.2.0-alpha.4.1') || !text.includes('0.2.1-alpha.4')) {
     failures.push(`${filename} must state the current fork/plugin compatibility pair`)
   }
@@ -52,15 +57,22 @@ for (const [filename, text] of [['README.md', readme], ['docs/README.en.md', eng
     failures.push(`${filename} must use the tonulls GitHub installation source`)
   }
 }
-const chineseReadme = await readFile(new URL('../docs/README.zh.md', import.meta.url), 'utf8')
-if (!chineseReadme.includes('使用你当前 GPT 订阅计划提供的图片生成能力。')) {
+const chineseDetails = await readFile(new URL('../docs/README-details.zh.md', import.meta.url), 'utf8')
+if (!chineseDetails.includes('使用你当前 GPT 订阅计划提供的图片生成能力。')) {
   failures.push('Chinese README must describe image generation with the approved subscription copy')
 }
 
 try {
   const compatibility = JSON.parse(await readFile(new URL('../verified-compatibility.json', import.meta.url), 'utf8'))
-  if (!readme.includes('[English](docs/README.en.md)') || !englishReadme.includes('[Русский](../README.md)')) {
-    failures.push('Russian and English README localization links must point to each other')
+  if (
+    !readme.includes('[English](docs/README.en.md)') ||
+    !readme.includes('[简体中文](docs/README.zh.md)') ||
+    !englishReadme.includes('[Russian](../README.md)') ||
+    !englishReadme.includes('[简体中文](README.zh.md)') ||
+    !chineseReadme.includes('[Русский](../README.md)') ||
+    !chineseReadme.includes('[English](README.en.md)')
+  ) {
+    failures.push('Russian, English, and Chinese README localization links must cross-link')
   }
 } catch {
   failures.push('verified-compatibility.json must be readable JSON')
