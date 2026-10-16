@@ -104,7 +104,7 @@ describe('issue 219 provider-to-DSH diagnostics', () => {
       expect(error(chunks).code).toBe('PI_AI_ERROR')
       const headers = new Headers(fetch.mock.calls[0]?.[1]?.headers)
       expect(headers.get('originator')).toBe('pi')
-      expect(headers.get('user-agent')).toContain('pi')
+      expect(headers.get('user-agent')).toMatch(/^(?:pi \(|deepseek-harness\/)/u)
       expect(headers.get('x-client-request-id')).toBe(diagnostic(chunks)['clientRequestId'])
     } finally { requests.dispose() }
   })

@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('capability documentation', () => {
   it.each([
-    ['README.i18n.yaml', ['README.md', 'docs/README.zh.md']],
+    ['README.i18n.yaml', ['README.md', 'docs/README.en.md']],
     ['docs/reference.i18n.yaml', ['docs/reference.md', 'docs/reference.zh.md']],
   ])('records the reviewed bilingual pair in %s', async (record, paths) => {
     const pairing = await readFile(new URL(`../${record}`, import.meta.url), 'utf8')
