@@ -29,6 +29,27 @@ const OPENAI_CODEX_ASTRA_MODEL: Model<'openai-codex-responses'> = {
   },
 }
 
+/** Models removed from newer pi-ai catalogs remain selectable for saved sessions. */
+const LEGACY_OPENAI_CODEX_MODELS: readonly Model<'openai-codex-responses'>[] = [
+  {
+    id: 'gpt-5.4', name: 'GPT-5.4', api: 'openai-codex-responses', provider: OPENAI_CODEX_PROVIDER,
+    baseUrl: 'https://chatgpt.com/backend-api', reasoning: true, input: ['text', 'image'],
+    cost: { input: 2.5, output: 15, cacheRead: 0.25, cacheWrite: 0,
+      tiers: [{ inputTokensAbove: 272_000, input: 5, output: 22.5, cacheRead: 0.5, cacheWrite: 0 }] },
+    contextWindow: 272_000, maxTokens: 128_000,
+    thinkingLevelMap: { xhigh: 'xhigh', minimal: 'low' },
+    compat: { supportsOpenAIGrammarTools: true, supportsToolSearch: true },
+  },
+  {
+    id: 'gpt-5.4-mini', name: 'GPT-5.4 mini', api: 'openai-codex-responses', provider: OPENAI_CODEX_PROVIDER,
+    baseUrl: 'https://chatgpt.com/backend-api', reasoning: true, input: ['text', 'image'],
+    cost: { input: 0.75, output: 4.5, cacheRead: 0.075, cacheWrite: 0 },
+    contextWindow: 272_000, maxTokens: 128_000,
+    thinkingLevelMap: { xhigh: 'xhigh', minimal: 'low' },
+    compat: { supportsOpenAIGrammarTools: true, supportsToolSearch: true },
+  },
+]
+
 /** Preserve native Astra metadata with calibrated effort choices, or add the fallback. */
 export function withOpenAICodexAstra(
   provider: Provider<'openai-codex-responses'>,
@@ -48,6 +69,9 @@ export function withOpenAICodexModels(
 ): Provider<'openai-codex-responses'> {
   const baseline = withOpenAICodexAstra(provider)
   const models = [...baseline.getModels()]
+  for (const legacy of LEGACY_OPENAI_CODEX_MODELS) {
+    if (!models.some(model => model.id === legacy.id)) models.push(legacy)
+  }
   for (const [id, name] of [['gpt-6.1-sol', 'GPT-6.1-Sol'], ['gpt-6-sol', 'GPT-6-Sol'], ['gpt-6-luna', 'GPT-6-Luna']] as const) {
     const index = models.findIndex(model => model.id === id)
     // Ultra is Codex client orchestration, not a pi-ai thinking level.

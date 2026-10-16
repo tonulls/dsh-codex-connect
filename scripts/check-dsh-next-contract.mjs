@@ -227,8 +227,8 @@ const candidateDoctor = {
     status: 'unverified',
     node: { status: 'compatible' },
     packages: Object.fromEntries(['@deepseek-ai/dsh-llm', '@deepseek-ai/dsh-llm-pi-ai', '@deepseek-ai/dsh-compaction', '@earendil-works/pi-ai'].map(name => [name, {
-      supported: name === '@earendil-works/pi-ai' ? '0.85.1' : '0.1.7-rc.1 || 0.1.7-rc.2 || 0.2.0-rc.1 || 0.2.0-rc.2 || 0.2.1-alpha.1 || 0.2.1-alpha.2 || 0.2.1-alpha.3',
-      installed: name === '@earendil-works/pi-ai' ? '0.85.1' : '0.1.7-rc.3',
+      supported: name === '@earendil-works/pi-ai' ? '0.85.1 || 1.1.0' : '0.1.7-rc.1 || 0.1.7-rc.2 || 0.2.0-rc.1 || 0.2.0-rc.2 || 0.2.1-alpha.1 || 0.2.1-alpha.2 || 0.2.1-alpha.3 || 0.2.1-alpha.4',
+      installed: name === '@earendil-works/pi-ai' ? '1.1.0' : '0.1.7-rc.3',
       status: 'unverified',
     }])),
   },
@@ -247,7 +247,7 @@ assertContract('declared installation checks still reject unverified versions', 
 const declaredDoctor = structuredClone(candidateDoctor)
 declaredDoctor.compatibility.status = 'compatible'
 for (const [name, entry] of Object.entries(declaredDoctor.compatibility.packages)) {
-  entry.installed = name === '@earendil-works/pi-ai' ? '0.85.1' : '0.1.7-rc.1'
+  entry.installed = name === '@earendil-works/pi-ai' ? '1.1.0' : '0.1.7-rc.1'
   entry.status = 'compatible'
 }
 assertContract('declared compatible diagnostics still pass', doctorOutcome(declaredDoctor, {}, 0) === 'continue-runtime')

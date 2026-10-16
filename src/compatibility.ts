@@ -5,9 +5,10 @@ import { fileURLToPath } from 'node:url'
 export const COMPATIBILITY_SCHEMA_VERSION = 1 as const
 export const SUPPORTED_NODE_RANGE = '^22.19.0 || >=24.0.0'
 export const SUPPORTED_DSH_PLUGIN_API_VERSION = '0.1.7-rc.1'
-export const SUPPORTED_DSH_PLUGIN_API_VERSIONS = [SUPPORTED_DSH_PLUGIN_API_VERSION, '0.1.7-rc.2', '0.2.0-rc.1', '0.2.0-rc.2', '0.2.1-alpha.1', '0.2.1-alpha.2', '0.2.1-alpha.3'] as const
+export const SUPPORTED_DSH_PLUGIN_API_VERSIONS = [SUPPORTED_DSH_PLUGIN_API_VERSION, '0.1.7-rc.2', '0.2.0-rc.1', '0.2.0-rc.2', '0.2.1-alpha.1', '0.2.1-alpha.2', '0.2.1-alpha.3', '0.2.1-alpha.4'] as const
 export const SUPPORTED_DSH_PLUGIN_API_RANGE = SUPPORTED_DSH_PLUGIN_API_VERSIONS.join(' || ')
-export const SUPPORTED_PI_AI_RANGE = '0.85.1'
+export const SUPPORTED_PI_AI_VERSIONS = ['0.85.1', '1.1.0'] as const
+export const SUPPORTED_PI_AI_RANGE = SUPPORTED_PI_AI_VERSIONS.join(' || ')
 export const PI_AI_PACKAGE = '@earendil-works/pi-ai'
 
 export const DSH_PLUGIN_API_PACKAGES = [
@@ -103,7 +104,7 @@ export function isSupportedDshPluginApiVersion(value: string): boolean {
 }
 
 function piAiVersionStatus(value: string): CompatibilityStatus {
-  return value.trim() === SUPPORTED_PI_AI_RANGE ? 'compatible' : 'unverified'
+  return SUPPORTED_PI_AI_VERSIONS.some(version => version === value.trim()) ? 'compatible' : 'unverified'
 }
 
 function parseNodeVersion(value: string): [number, number, number] | undefined {
@@ -171,7 +172,7 @@ export function evaluateCompatibility(input: CompatibilityEvaluationInput = {}):
   const matchedPair = dshVersion === packages['@deepseek-ai/dsh-llm-pi-ai'].installed
     && dshVersion === packages['@deepseek-ai/dsh-compaction'].installed
     && typeof dshVersion === 'string' && isSupportedDshPluginApiVersion(dshVersion)
-    && piVersion === SUPPORTED_PI_AI_RANGE
+    && typeof piVersion === 'string' && SUPPORTED_PI_AI_VERSIONS.some(version => version === piVersion)
   return {
     schemaVersion: COMPATIBILITY_SCHEMA_VERSION,
     status: status === 'compatible' && !matchedPair ? 'unverified' : status,

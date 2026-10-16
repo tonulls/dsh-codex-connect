@@ -1,7 +1,7 @@
 /** OpenAI Codex adapter assembled from public dsh-llm-pi-ai extension points. */
 
 import { defaultProviderAuthContext, InMemoryCredentialStore } from '@earendil-works/pi-ai'
-import type { Context as PiContext, Provider, SimpleStreamOptions } from '@earendil-works/pi-ai'
+import type { Context as PiContext, Provider, SimpleStreamOptions, TranscriptContext } from '@earendil-works/pi-ai'
 import { openaiCodexProvider } from '@earendil-works/pi-ai/providers/openai-codex'
 import { codexProviderContext } from './pi-context.ts'
 import { resolveRetryPolicy } from '@deepseek-ai/dsh-llm'
@@ -62,7 +62,7 @@ export function withOpenAICodexFastMode(
   const streamSimple = provider.streamSimple
   return {
     ...provider,
-    streamSimple(model, context: PiContext, options?: SimpleStreamOptions) {
+    streamSimple(model, context: TranscriptContext, options?: SimpleStreamOptions) {
       const sessionId = options?.sessionId
       const enabled = provider.id === OPENAI_CODEX_PROVIDER
         && model.provider === OPENAI_CODEX_PROVIDER
@@ -161,7 +161,7 @@ export function createOpenAICodexProfile(
     modelErrors: new Map<string, string>(),
     piProvider: requestProvider(effectiveProvider, fastMode, proxyManager, resolveProxyUrl, backendRequests, wrapProvider),
   }
-  return profile
+  return profile as unknown as ResolvedPiAiProviderProfile & { piProvider: Provider }
 }
 
 /**

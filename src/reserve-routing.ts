@@ -2,7 +2,7 @@
 
 import type { Context } from '@deepseek-ai/cordis'
 import type { LlmCallConfig } from '@deepseek-ai/dsh-llm'
-import { isAgentLoopRequest, QUOTA_EXCEEDED_CODE } from '@deepseek-ai/dsh-llm'
+import { QUOTA_EXCEEDED_CODE } from '@deepseek-ai/dsh-llm'
 import type { Agent } from '@deepseek-ai/dsh-agent'
 import { OPENAI_CODEX_PROVIDER } from './store.ts'
 import type { OpenAICodexQuotaState } from './quota-state.ts'
@@ -32,7 +32,7 @@ export function registerReserveRouting(ctx: Context, options: ReserveRoutingOpti
   const recoveryAttempts = new Map<string, number>()
   ctx.on('llm/stream', (request, next) => {
     if (request.provider === OPENAI_CODEX_PROVIDER && request.model === OPENAI_CODEX_RESERVE_MODEL
-      && !isAgentLoopRequest(request)) {
+      && !options.permits.authorizesRequest(request.sessionId, request.signal)) {
       throw new Error('Codex Reserve is available only to server-authorized agent-loop requests; select an ordinary model for auxiliary calls')
     }
     return next()
@@ -93,7 +93,7 @@ export function registerReserveRouting(ctx: Context, options: ReserveRoutingOpti
       await options.returns.save(sessionId, { version: 1, identityKey: identity.key, ordinary: { ...ordinary } })
     }
     authoritySignal.throwIfAborted()
-    options.permits.issue(sessionId, identity.key, authoritySignal)
+    options.permits.issue(sessionId, identity.key, authoritySignal, signal)
     if (usingReserve) return config
     // Reserve uses Luna's own reasoning/output defaults, not the exhausted model's controls.
     const reserve: LlmCallConfig = { provider: OPENAI_CODEX_PROVIDER, model: OPENAI_CODEX_RESERVE_MODEL }

@@ -34,7 +34,7 @@ export function withAdaptiveTaskProvider(provider: Provider): Provider {
         const reasoning = 'reasoning' in next ? next.reasoning : undefined
         const effort = reasoning !== null && typeof reasoning === 'object' && 'effort' in reasoning ? reasoning.effort : undefined
         if (task.hostDefaultEfforts === undefined ? effort !== task.route.effort
-          : effort !== undefined && !task.hostDefaultEfforts.includes(String(effort))) taskFailure('TASK_ROUTE_CHANGED')
+          : effort !== undefined && effort !== 'none' && !task.hostDefaultEfforts.includes(String(effort))) taskFailure('TASK_ROUTE_CHANGED')
         return next
       },
     })

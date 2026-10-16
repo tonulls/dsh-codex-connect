@@ -208,20 +208,16 @@ export async function checkDshInstall({ pluginManagerCandidate } = {}) {
   try {
     const pack = await runCommand('npm', [
       'pack',
-      '--json',
       '--ignore-scripts',
       '--pack-destination', tempRoot,
     ], { cwd: REPO_ROOT, env })
     requireSuccess('npm pack', pack)
-    const [manifest] = JSON.parse(pack.stdout)
-    if (typeof manifest?.filename !== 'string'
-      || manifest.filename.length === 0
-      || basename(manifest.filename) !== manifest.filename) {
-      throw new Error('npm pack did not report one package filename')
-    }
-    const pluginSpec = `file:${join(tempRoot, manifest.filename)}`
-    const pluginArtifactSha256 = createHash('sha256').update(await readFile(join(tempRoot, manifest.filename))).digest('hex')
-    const pluginVersion = manifest.version
+    const pluginVersion = PACKAGE_MANIFEST.version
+    const pluginFilename = `${PACKAGE_MANIFEST.name}-${pluginVersion}.tgz`
+    if (basename(pluginFilename) !== pluginFilename) throw new Error('package manifest produced an invalid tarball filename')
+    const pluginTarball = join(tempRoot, pluginFilename)
+    const pluginArtifactSha256 = createHash('sha256').update(await readFile(pluginTarball)).digest('hex')
+    const pluginSpec = `file:${pluginTarball}`
 
     let overrides
     try {
@@ -272,9 +268,24 @@ export async function checkDshInstall({ pluginManagerCandidate } = {}) {
       web: configBlock(beforeDump.stdout, 'web'),
     }
 
+    // The DSH plugin manager runs pnpm from this isolated profile and records
+    // build approvals in its pnpm-workspace.yaml. Permit only the two scripts
+    // reported by the exact alpha.4 dependency closure, after source review.
+    const profileDir = join(dshHome, 'profiles', 'web')
+    await mkdir(profileDir, { recursive: true })
+    await writeFile(join(profileDir, 'pnpm-workspace.yaml'), [
+      'allowBuilds:',
+      "  '@google/genai': true",
+      '  protobufjs: true',
+      '',
+    ].join('\n'))
+
     const add = await runCommand(dshBinary, [
       'plugin', '--profile', 'web', 'add', pluginSpec,
-    ], { cwd: workspace, env })
+    ], {
+      cwd: workspace,
+      env,
+    })
     requireSuccess('local plugin install', add, 'compatibility')
 
     const afterDump = await runCommand(dshBinary, ['--profile', 'web', '--dump-config'], { cwd: workspace, env })

@@ -23,6 +23,16 @@ export async function checkInstalledReserve(importHost, CodexConnect) {
   Date.now = () => now
   const ctx = new Context()
   process.env.DSH_HOME = directory
+  const llmRequestModels = []
+  const routedModels = []
+  const agentErrors = []
+  ctx.on('llm/stream', (request, next) => {
+    llmRequestModels.push({ provider: request.provider, model: request.model })
+    return next()
+  }, { prepend: true })
+  ctx.on('agent/error', ({ error }) => {
+    agentErrors.push({ message: error instanceof Error ? error.message : String(error), code: error?.code })
+  })
   let ordinary = false
   let accountId = 'fixture-account'
   let userId = 'fixture-user'
@@ -68,6 +78,11 @@ export async function checkInstalledReserve(importHost, CodexConnect) {
     for (const plugin of [Llm, Sessions, Projections, Prompt, Tools, Agents]) await ctx.plugin(plugin)
     await ctx.plugin(Loop, { agents: [] })
     let plugin = await ctx.plugin(CodexConnect, { enableReserveFallback: true })
+    ctx.on('agent/request', async (_event, next) => {
+      const config = await next()
+      routedModels.push({ provider: config.provider, model: config.model })
+      return config
+    })
     assert.equal((await ctx.llm.listModels('openai-codex')).some(model => model.id === 'gpt-reserve'), false)
     const selection = { provider: 'openai-codex', model: 'gpt-6-astra', reasoningEffort: ReasoningEffortId('max'), maxTokens: 2048 }
     const agent = await ctx.agentLoop.create(SessionId('installed-reserve-fixture'), selection)
@@ -79,9 +94,10 @@ export async function checkInstalledReserve(importHost, CodexConnect) {
       assert.deepEqual(agent.session.requestHeader()?.config, ordinary ? selection : { provider: 'openai-codex', model: 'gpt-reserve' })
       if (!ordinary) assert.equal(agent.session.snapshotEvents().filter(event => event.type === 'request/context').at(-1)?.data.contextWindow, 272_000)
     }
-    assert.equal(usageReads, 2)
-    assert.deepEqual(wires.map(wire => wire.model), ['gpt-reserve', 'gpt-reserve', 'gpt-6-astra'])
-    assert.equal(wires[0].reasoning, undefined)
+    assert.equal(usageReads, 2, 'Reserve routing did not read the synthetic usage endpoint twice')
+    assert.deepEqual(wires.map(wire => wire.model), ['gpt-reserve', 'gpt-reserve', 'gpt-6-astra'],
+      `LLM requests were ${JSON.stringify(llmRequestModels)}; routed configs were ${JSON.stringify(routedModels)}; wire models were ${JSON.stringify(wires.map(wire => wire.model))}; agent errors were ${JSON.stringify(agentErrors)}`)
+    assert.equal(wires[0].reasoning.effort, 'none')
     assert.equal(wires[2].reasoning.effort, 'max')
     const answers = agent.session.snapshotEvents().filter(event => event.type === 'assistant/message')
     assert.deepEqual(answers.map(event => event.data.message.source.model), ['gpt-reserve', 'gpt-reserve', 'gpt-6-astra'])

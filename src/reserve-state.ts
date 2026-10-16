@@ -109,6 +109,7 @@ export class ReserveReturnStore {
 interface ReservePermit {
   identityKey: string
   signal: AbortSignal
+  requestSignal: AbortSignal
   onAbort: () => void
 }
 
@@ -117,15 +118,22 @@ export class ReserveRequestPermits {
   private readonly pending = new Map<string, ReservePermit>()
 
   /** Replace an undispatched attempt for this session; abort revokes it immediately. */
-  issue(sessionId: string, identityKey: string, signal: AbortSignal): void {
+  issue(sessionId: string, identityKey: string, signal: AbortSignal, requestSignal = signal): void {
     this.revoke(sessionId)
     signal.throwIfAborted()
     if (this.pending.size >= 256) throw new Error('Too many pending Codex Reserve requests')
-    const permit: ReservePermit = { identityKey, signal, onAbort: () => {
+    const permit: ReservePermit = { identityKey, signal, requestSignal, onAbort: () => {
       if (this.pending.get(sessionId) === permit) this.revoke(sessionId)
     } }
     this.pending.set(sessionId, permit)
     signal.addEventListener('abort', permit.onAbort, { once: true })
+  }
+
+  /** Match the exact loop signal across separately resolved copies of the DSH LLM package. */
+  authorizesRequest(sessionId: string | undefined, signal: AbortSignal | undefined): boolean {
+    if (sessionId === undefined || signal === undefined) return false
+    const permit = this.pending.get(sessionId)
+    return permit !== undefined && !permit.signal.aborted && permit.requestSignal === signal
   }
 
   /** Reject manual routes, stale permits, and an account switch between usage and dispatch. */
