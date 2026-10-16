@@ -7,3 +7,16 @@ node_modules/
 # Local history and tests are not part of published repository changes.
 .History/
 /tests/
+
+# Private working archive; keep local research and run evidence out of hosted branches.
+/docs/agent-notes/
+/docs/experiments/
+/.github/ADAPTIVE_TASK_CONSOLIDATED_MATRIX.json
+/.github/ADAPTIVE_TASK_CONSOLIDATION_VALIDATION.md
+/.github/ALPHA*.md
+/.github/DEPENDENCY_SECURITY_REFRESH.md
+/.github/DSH_012_COMPATIBILITY.md
+/.github/MODELS_ACCOUNT_CARD.md
+/.github/phase1-session/
+/.github/reviews/
+/.github/validation/

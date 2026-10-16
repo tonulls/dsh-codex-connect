@@ -60,7 +60,7 @@ Direct connection is the default. An enabled credential-free HTTP(S) proxy appli
 
 ### Luna Reserve fallback
 
-Published Alpha 4.35 includes this default-off experiment; Alpha 4.34 does not include it. Real-account Reserve entry and recovery remain unverified. See the [publication and installation evidence](../.github/ALPHA_435_RELEASE_READINESS.md).
+Published Alpha 4.35 includes this default-off capability; Alpha 4.34 does not. Real-account Reserve entry and recovery were not verified for that release.
 
 `enableReserveFallback: true` opts agent requests into backend-authorized Luna Reserve fallback. The account UI and routing share an in-memory account/user-bound quota snapshot; concurrent reads coalesce and fresh reads do not issue another quota `GET`. A cold or stale read waits for refresh. After a successful fetch, background refresh runs at 60/30/15/5 seconds for usage below 75%, at least 75%, at least 90%, and at least 99%, using the highest consumption across ordinary and relevant model windows. Future reset times shorten the next refresh to reset plus one second; they never establish recovery. Cache reads do not postpone that deadline. Transient failures discard cached decisions and use exponential backoff starting at 60 seconds, with up to 10% positive jitter and a 15-minute local cap; a longer valid `Retry-After` takes precedence. Authentication rejections and non-retryable 4xx errors stop automatic usage requests for that credential until credentials/state change. Delays beyond the timer range stop automatic retry rather than overflowing. Background GETs stop after two minutes without a foreground quota consumer; stale routing authority still expires. Account mutations, settings changes, and plugin disposal invalidate the state; UI receives only the public quota projection.
 
@@ -105,7 +105,7 @@ The tool `codex_connect_image_generate` accepts `{"operation":"edit","prompt":"c
 
 Every edit preserves the old image and stores a new original, preview and source relation. Continue from the new result or select an older result to branch. Missing, inaccessible or ambiguous inputs fail without quietly dropping references or generating a replacement. Preview-only history requires an explicit lower-resolution choice. Editing sends only the selected images to the image service; the existing capability remains disabled by default.
 
-The plugin accepts PNG, JPEG and WebP, with at most five inputs and stricter host limits where applicable. These are defensive limits, not a promise of backend entitlement. Output dimensions and preservation quality are service-controlled. Lost or uncertain requests are not automatically repeated; retrying can consume additional quota. See [the detailed contract and acceptance limits](experiments/issue-270-image-edit.md).
+The plugin accepts PNG, JPEG and WebP, with at most five inputs and stricter host limits where applicable. These are defensive limits, not a promise of backend entitlement. Output dimensions and preservation quality are service-controlled. Lost or uncertain requests are not automatically repeated; retrying can consume additional quota.
 
 ### Auto-review
 

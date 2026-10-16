@@ -94,7 +94,7 @@ jobs:
       - name: Verify exact-host delegation, consent and crash recovery
         env:
           MATRIX_NPM_CLI: ${{ runner.temp }}/phase2-npm/node_modules/npm/bin/npm-cli.js
-        run: node scripts/check-adaptive-task-delegation-matrix.mjs --report docs/experiments/phase2-ci-matrix.json
+        run: node scripts/check-adaptive-task-delegation-matrix.mjs
 
   browser-ui-regression:
     runs-on: ubuntu-latest

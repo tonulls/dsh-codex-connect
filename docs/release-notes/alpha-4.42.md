@@ -14,7 +14,7 @@ After npm publication is independently confirmed, install this exact version on 
 dsh plugin --profile web add dsh-codex-connect@0.1.0-alpha.4.42
 ```
 
-Preparing or publishing the package does not upgrade already-running installations. The npm `latest` channel is a separate, explicitly authorized promotion, not implied by `alpha` publication. See `../MIGRATION.md` and `docs/experiments/adaptive-task-publication-gate.md` for existing-task recovery.
+Preparing or publishing the package does not upgrade already-running installations. The npm `latest` channel is a separate, explicitly authorized promotion, not implied by `alpha` publication. See `../MIGRATION.md` for existing-task recovery.
 
 ## 中文
 

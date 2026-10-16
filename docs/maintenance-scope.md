@@ -50,9 +50,9 @@ This is a reviewed starting inventory, not proof that the dependency graph is fu
 
 Local research preservation has a separate private archive manifest; do not commit machine paths or private experiment evidence into the public repository. A local archive is not a merged product change and does not stop another running task. Existing scheduled jobs must not be assumed updated by this document.
 
-The [first code separation](agent-notes/core-transport-decoupling.md) removes implicit Task imports from ordinary transport. It retains explicit legacy-task wiring in the product and does not claim the entire runtime is retired.
+The first code separation removes implicit Task imports from ordinary transport. It retains explicit legacy-task wiring in the product and does not claim the entire runtime is retired.
 
-The [activation UI retirement](agent-notes/task-activation-ui-retirement.md) removes the full experimental form and its exclusive browser tests after dependency inspection. The public contribution retains recovery only. Historical design/evidence entries describing the deleted form are archival, not current source paths or reopening work.
+The activation UI retirement removes the full experimental form and its exclusive browser tests after dependency inspection. The public contribution retains recovery only. Historical design/evidence entries are not current source paths or reopening work.
 
 ## Evidence baseline
 

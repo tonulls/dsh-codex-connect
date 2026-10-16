@@ -1,6 +1,6 @@
 # Codex Connect 0.1.0-alpha.4.37 — release notes
 
-**Published on 2026-09-19.** [GitHub prerelease](https://github.com/franksong2702/dsh-codex-connect/releases/tag/v0.1.0-alpha.4.37); npm `alpha` points to 4.37 and `latest` remains 4.34. The [publication record](../../.github/ALPHA_437_PUBLICATION.md) verifies the immutable release commit and archive. This post-publication document update does not republish the package.
+**Published on 2026-09-19.** [GitHub prerelease](https://github.com/franksong2702/dsh-codex-connect/releases/tag/v0.1.0-alpha.4.37); npm `alpha` points to 4.37 and `latest` remains 4.34. This post-publication document update does not republish the package.
 
 ## Changes
 
@@ -26,4 +26,4 @@ Think #167, Split #199/#200 and the new-session Fast Mode enhancement #208 are n
 
 ## Maintainer gate
 
-External installation report #215 now has an evidence-backed preliminary disposition: the supplied excerpt identifies a missing local archive for another web-profile dependency, and an offline package-manager control reproduces that failure independently of Codex Connect. Reporter recovery and the UND_ERR_DESTROYED cause remain unconfirmed; the issue stays open. It is not currently a confirmed plugin regression blocking the unchanged supported-host release scope. 4.37 does not claim to repair that environment or support stock DSH 0.1.6-alpha.2. See [triage record](../agent-notes/issue-215-install-triage-2026-09-19.md). Exact candidate/main checks and authorization remain required; these notes do not authorize publication or deployment.
+External installation report #215 identified a missing local archive for another web-profile dependency, and an offline package-manager control reproduced that failure independently of Codex Connect. Reporter recovery and the UND_ERR_DESTROYED cause remain unconfirmed; the issue stays open. It is not a confirmed plugin regression blocking the unchanged supported-host release scope. 4.37 does not claim to repair that environment or support stock DSH 0.1.6-alpha.2.
